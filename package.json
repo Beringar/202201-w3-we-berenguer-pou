@@ -16,7 +16,8 @@
     "testEnvironment": "jsdom"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose --coverage",
+    "jest-watch": "jest --watchAll --verbose --coverage",
     "prepare": "husky install",
     "compile-sass": "sass src/scss/styles.scss public/css/styles.css",
     "compile-sass-watch": "sass --watch src/scss/styles.scss public/css/styles.css"
@@ -26,11 +27,13 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.16.8",
+    "@types/jest": "^27.4.0",
     "eslint": "^8.7.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
     "husky": "^7.0.0",
+    "jest": "^27.4.7",
     "sass": "^1.49.0"
   },
   "dependencies": {

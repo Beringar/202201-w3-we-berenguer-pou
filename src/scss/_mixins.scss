@@ -1,0 +1,10 @@
+@use "variables";
+
+@mixin rounded-card($border-radius) {
+  border-radius: $border-radius;
+  background-color: variables.$default-background-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+}

@@ -4,6 +4,8 @@ import MenuItemComponent from "./MenuItemComponent.js";
 import PokemonCardComponent from "./PokemonCardComponent.js";
 
 class PageComponent extends Component {
+  pokemons;
+
   constructor(parentElement) {
     super(parentElement, "page");
 
@@ -21,30 +23,40 @@ class PageComponent extends Component {
     </main>
     `;
     this.renderMenu();
-    this.renderPokemons();
+    this.getPokemons();
   }
 
   renderMenu() {
     const headerElement = this.element.querySelector(".header");
     const homePageMenuItem = new MenuItemComponent("Home", "/", true);
-    const myPokemonsMenuItem = new MenuItemComponent(
-      "My Pokemons",
-      "/mypokemons.html",
-      false
-    );
+    const myPokemonsMenuItem = new MenuItemComponent("My Pokemons", "/", false);
     new MenuComponent(headerElement, [homePageMenuItem, myPokemonsMenuItem]);
   }
 
-  renderPokemons() {
+  renderPokemons(pokemons) {
     const pokemonsContainer = this.element.querySelector(".pokemons-album");
-    for (let i = 0; i < 20; i++) {
+    pokemons.forEach((pokemon) => {
       new PokemonCardComponent(
         pokemonsContainer,
-        { name: `Poke #${i}` },
+        pokemon,
         () => null,
         () => null
       );
-    }
+    });
+  }
+
+  async getPokemons() {
+    const endpointURL = "https://pokeapi.co/api/v2/pokemon?limit=18";
+    const pokemonsEndpoints = await fetch(endpointURL)
+      .then((response) => response.json())
+      .then((data) => data.results);
+    const pokemonsAllpromise = Promise.all(
+      pokemonsEndpoints.map(({ url }) =>
+        fetch(url).then((response) => response.json())
+      )
+    );
+    this.pokemons = await pokemonsAllpromise;
+    this.renderPokemons(this.pokemons);
   }
 }
 

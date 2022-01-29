@@ -37,3 +37,8 @@ Configs: put here stack, tooling, etc...
 8. added PokemonCardComponent
 
 - 3 tests OK.
+
+9. implement get data from pokeAPI
+
+- get 18 first elements and render to dom
+- TODO: pagination

@@ -6,7 +6,7 @@ class PokemonCardComponent extends Component {
   actionOnClick2;
 
   constructor(parentElement, pokemon, actionOnClick1, actionOnClick2) {
-    super(parentElement, "pokemon-card col", "div");
+    super(parentElement, "pokemon-card col", "article");
 
     this.pokemon = pokemon;
     this.actionOnClick1 = actionOnClick1;
@@ -45,10 +45,10 @@ class PokemonCardComponent extends Component {
       <p class="text-muted text-end">extra data...</p>
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
-          <button type="button" class="btn btn-sm btn-outline-secondary">
+          <button type="button" class="poke-card__button-a btn btn-sm btn-outline-secondary">
             View
           </button>
-          <button type="button" class="btn btn-sm btn-outline-secondary">
+          <button type="button" class="poke-card__button-b btn btn-sm btn-outline-secondary">
             Add
           </button>
         </div>
@@ -59,7 +59,12 @@ class PokemonCardComponent extends Component {
   }
 
   addListeners() {
-    this.element.addEventListener("click", this.actionOnClick1);
+    this.element
+      .querySelector(".poke-card__button-a")
+      .addEventListener("click", this.actionOnClick1);
+    this.element
+      .querySelector(".poke-card__button-b")
+      .addEventListener("click", this.actionOnClick2);
   }
 }
 

@@ -39,5 +39,6 @@ Configs: put here stack, tooling, etc...
 - 3 tests OK.
 
 9. implement get data from pokeAPI
-   9.1 get 18 first elements and render to dom
-   TODO: pagination
+
+- get 18 first elements and render to dom
+- TODO: pagination

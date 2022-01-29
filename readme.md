@@ -24,7 +24,7 @@ Configs: put here stack, tooling, etc...
 4. added Component component
 5. added PageComponent component
 
-- added basic html structure: header, main, footer, footer
+- added basic html structure: header, main, footer
 
 6. added MenuComponent component
 
@@ -33,3 +33,5 @@ Configs: put here stack, tooling, etc...
 7. added MenuItemComponent components
 
 - 4 tests OK.
+
+8. added PokemonCardComponent

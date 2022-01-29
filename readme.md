@@ -27,6 +27,9 @@ Configs: put here stack, tooling, etc...
 - added basic html structure: header, main, footer, footer
 
 6. added MenuComponent component
+
+- 2 tests OK.
+
 7. added MenuItemComponent components
 
-8. testing components MenuComponent / MenuItemComponent
+- 4 tests OK.

@@ -1,8 +1,11 @@
 import Component from "./Component.js";
 
 class MenuComponent extends Component {
-  constructor(parentElement) {
+  items;
+  constructor(parentElement, menuItems) {
     super(parentElement, "menu container", "div");
+
+    this.items = menuItems;
 
     this.generateHTML();
   }
@@ -15,11 +18,16 @@ class MenuComponent extends Component {
           <span class="fs-4">Beringar Pokémon</span>
         </a>
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">My Pokemons</a></li>
         </ul>
       </div>
     `;
+
+    this.renderMenuItems(this.items);
+  }
+
+  renderMenuItems(items) {
+    const navContainer = this.element.querySelector(".nav");
+    items.forEach((item) => navContainer.append(item.element));
   }
 }
 

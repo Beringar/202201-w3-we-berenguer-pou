@@ -1,5 +1,6 @@
 import Component from "./Component.js";
 import MenuComponent from "./MenuComponent.js";
+import MenuItemComponent from "./MenuItemComponent.js";
 
 class PageComponent extends Component {
   constructor(parentElement) {
@@ -18,7 +19,13 @@ class PageComponent extends Component {
 
   renderMenu() {
     const headerElement = this.element.querySelector(".header");
-    new MenuComponent(headerElement);
+    const homePageMenuItem = new MenuItemComponent("Home", "/", true);
+    const myPokemonsMenuItem = new MenuItemComponent(
+      "My Pokemons",
+      "/mypokemons.html",
+      false
+    );
+    new MenuComponent(headerElement, [homePageMenuItem, myPokemonsMenuItem]);
   }
 }
 

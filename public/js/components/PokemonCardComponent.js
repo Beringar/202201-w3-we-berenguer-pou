@@ -20,29 +20,19 @@ class PokemonCardComponent extends Component {
   generateHTML() {
     this.element.innerHTML = `
   <div class="card shadow-sm">
-    <svg
-      class="bd-placeholder-img card-img-top"
-      width="100%"
-      height="225"
-      xmlns="http://www.w3.org/2000/svg"
-      role="img"
-      aria-label="Placeholder: Thumbnail"
-      preserveAspectRatio="xMidYMid slice"
-      focusable="false"
-    >
-      <title>Placeholder</title>
-      <rect width="100%" height="100%" fill="#55595c" />
-      <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-        Thumbnail
-      </text>
-    </svg>
-
+    <img src="${
+      this.pokemon.sprites.other["official-artwork"].front_default
+    }" class="card-img-top" alt="${this.pokemon.name}">
     <div class="card-body">
-      <h5 class="card-title">${this.pokemon.name}</h5>
+      <h5 class="card-title">${this.pokemon.name[0].toUpperCase()}${this.pokemon.name.slice(
+      1
+    )}</h5>
       <p class="card-text">
-        Pokemon description , bla, bla....
+        Species: ${this.pokemon.species.name}
       </p>
-      <p class="text-muted text-end">extra data...</p>
+      <p class="text-muted text-end">height: ${this.pokemon.height} weight: ${
+      this.pokemon.weight
+    }</p>
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
           <button type="button" class="poke-card__button-a btn btn-sm btn-outline-secondary">

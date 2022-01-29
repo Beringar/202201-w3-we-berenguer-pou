@@ -10,4 +10,12 @@
     height: 50px;
     padding-right: 8px;
   }
+  &__item {
+    &__link {
+      color: greenyellow;
+      &--current {
+        color: fuchsia;
+      }
+    }
+  }
 }

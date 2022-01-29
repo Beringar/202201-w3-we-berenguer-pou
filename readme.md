@@ -25,3 +25,8 @@ Configs: put here stack, tooling, etc...
 5. added PageComponent component
 
 - added basic html structure: header, main, footer, footer
+
+6. added MenuComponent component
+7. added MenuItemComponent components
+
+8. testing components MenuComponent / MenuItemComponent

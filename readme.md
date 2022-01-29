@@ -35,3 +35,5 @@ Configs: put here stack, tooling, etc...
 - 4 tests OK.
 
 8. added PokemonCardComponent
+
+- 3 tests OK.

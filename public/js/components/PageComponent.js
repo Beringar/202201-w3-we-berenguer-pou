@@ -15,7 +15,7 @@ class PageComponent extends Component {
     <header class="header p-3 bg-dark text-white"></header>
     <main class="main py-5 bg-light">
       <div class="container">
-        <div class="pokemons-album row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <section class="pokemons-album row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         </div>
       </div>
     </main>

@@ -5,6 +5,14 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700;900&display=swap");
 
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
 .menu {
   &__logo {
     height: 50px;

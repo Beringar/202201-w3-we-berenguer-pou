@@ -5,8 +5,7 @@ describe("Given a MenuComponent component", () => {
   describe("When it's rendered", () => {
     test("Then it should render a div", () => {
       const container = document.createElement("div");
-      const menu = new MenuComponent(container, []);
-
+      new MenuComponent(container, []);
       expect(container.querySelector("div")).not.toBeNull();
     });
   });

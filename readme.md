@@ -43,3 +43,10 @@ Configs: put here stack, tooling, etc...
 10. implement paginated data fetching. OK
 
 - BUGFIX: pagination when in last page, modifies offset value. Fix later, after CRUD
+
+11. implement POST pokemon to mypokemonsAPI
+
+- added function addPokemonToCollection
+- passed action in button 1 when instantiate PokemonCard component --> addPokemonToCollection()
+
+12. implemented ButtonComponent component to inject actions to cards and

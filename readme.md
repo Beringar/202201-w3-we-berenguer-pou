@@ -49,4 +49,6 @@ Configs: put here stack, tooling, etc...
 - added function addPokemonToCollection
 - passed action in button 1 when instantiate PokemonCard component --> addPokemonToCollection()
 
-12. implemented ButtonComponent component to inject actions to cards and
+12. implemented ButtonComponent component to inject actions to cards conditionally (if main page(pokeapi), if mypokemons(myapi))
+
+13. implemented removePokemonFromCollection in PageComponent component (if main page(pokeapi), if mypokemons(myapi))

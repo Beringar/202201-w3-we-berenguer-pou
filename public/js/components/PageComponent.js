@@ -145,7 +145,7 @@ class PageComponent extends Component {
           pokemonCardButtonsContainer,
           "poke-card__button btn btn-sm btn-outline-secondary",
           "Remove from myPokemons",
-          () => null
+          () => this.removePokemonFromCollection(pokemon.id)
         );
       }
     });
@@ -206,6 +206,19 @@ class PageComponent extends Component {
     })
       .then((response) => response.json())
       .then((json) => json);
+  }
+
+  async removePokemonFromCollection(pokemonID) {
+    this.lastaction = await fetch(
+      `http://localhost:4000/pokemon/${pokemonID}`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => json);
+
+    this.element.querySelector(`[data-id='${pokemonID}']`).remove();
   }
 }
 

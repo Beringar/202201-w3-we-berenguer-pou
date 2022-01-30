@@ -2,23 +2,17 @@ import Component from "./Component.js";
 
 class PokemonCardComponent extends Component {
   pokemon;
-  actionOnClick1;
-  actionOnClick2;
   pokemonImageUrl;
 
-  constructor(parentElement, pokemon, actionOnClick1, actionOnClick2) {
+  constructor(parentElement, pokemon) {
     super(parentElement, "pokemon-card col", "article");
 
     this.pokemon = pokemon;
-    this.actionOnClick1 = actionOnClick1;
-    this.actionOnClick2 = actionOnClick2;
     this.pokemonImageUrl =
       this.pokemon.sprites.other["official-artwork"].front_default ??
       "https://www.fillmurray.com/g/300/300";
 
     this.generateHTML();
-
-    this.addListeners();
   }
 
   generateHTML() {
@@ -39,26 +33,11 @@ class PokemonCardComponent extends Component {
     }</p>
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
-          <button type="button" class="poke-card__button-a btn btn-sm btn-outline-secondary">
-            View
-          </button>
-          <button type="button" class="poke-card__button-b btn btn-sm btn-outline-secondary">
-            Add
-          </button>
         </div>
       </div>
     </div>
   </div>
 `;
-  }
-
-  addListeners() {
-    this.element
-      .querySelector(".poke-card__button-a")
-      .addEventListener("click", this.actionOnClick1);
-    this.element
-      .querySelector(".poke-card__button-b")
-      .addEventListener("click", this.actionOnClick2);
   }
 }
 

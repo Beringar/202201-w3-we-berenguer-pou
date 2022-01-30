@@ -5,10 +5,10 @@ import PokemonCardComponent from "./PokemonCardComponent.js";
 
 class PageComponent extends Component {
   pokemons;
-  nextPageEndPoint = "https://pokeapi.co/api/v2/pokemon?limit=18&offset=0";
+  nextPageEndPoint = "https://pokeapi.co/api/v2/pokemon?limit=100&offset=0";
   previousPageEndPoint = null;
   pokemonsCount;
-  pokemonsPerPage = 18;
+  pokemonsPerPage = 100;
   currentOffset;
 
   constructor(parentElement) {

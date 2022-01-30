@@ -14,7 +14,7 @@ class PokemonCardComponent extends Component {
     this.actionOnClick2 = actionOnClick2;
     this.pokemonImageUrl =
       this.pokemon.sprites.other["official-artwork"].front_default ??
-      this.pokemon.sprites.front_default;
+      "https://www.fillmurray.com/g/300/300";
 
     this.generateHTML();
 

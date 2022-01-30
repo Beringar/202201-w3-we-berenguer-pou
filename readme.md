@@ -40,5 +40,6 @@ Configs: put here stack, tooling, etc...
 
 9. implement get data from pokeAPI
 
-- get 18 first elements and render to dom
-- TODO: pagination
+10. implement paginated data fetching. OK
+
+- BUGFIX: pagination when in last page, modifies offset value. Fix later, after CRUD

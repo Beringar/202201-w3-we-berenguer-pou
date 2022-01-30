@@ -6,7 +6,10 @@ import PokemonCardComponent from "./PokemonCardComponent.js";
 class PageComponent extends Component {
   pokemons;
   nextPageEndPoint = "https://pokeapi.co/api/v2/pokemon?limit=18&offset=0";
-  previousPageEndPoint;
+  previousPageEndPoint = null;
+  pokemonsCount;
+  pokemonsPerPage = 18;
+  currentOffset;
 
   constructor(parentElement) {
     super(parentElement, "page");
@@ -21,7 +24,7 @@ class PageComponent extends Component {
       <div class="container">
         <div class="mb-2 btn-group" role="group" aria-label="Basic example">
           <button type="button" class="previous-page-button btn btn-primary">Previous page</button>
-          <button type="button" class="btn btn-warning">(to do: update page num) 1/118</button>
+          <button type="button" class="page-count-button btn btn-warning"></button>
           <button type="button" class="next-page-button btn btn-primary">Next page</button>
         </div>
         <section class="pokemons-album row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -61,6 +64,7 @@ class PageComponent extends Component {
       .then((data) => {
         this.nextPageEndPoint = data.next;
         this.previousPageEndPoint = data.previous;
+        this.pokemonsCount = data.count;
         return data.results;
       });
     const pokemonsAllpromise = Promise.all(
@@ -70,6 +74,7 @@ class PageComponent extends Component {
     );
     this.pokemons = await pokemonsAllpromise;
     this.renderPokemons(this.pokemons);
+    this.updatePageNavigation();
   }
 
   addListeners() {
@@ -77,6 +82,22 @@ class PageComponent extends Component {
       ".previous-page-button"
     );
     const nextPageButton = this.element.querySelector(".next-page-button");
+    previousPageButton.addEventListener("click", () =>
+      this.getPokemons(this.previousPageEndPoint)
+    );
+    // BUGFIX: when in last page offset is passed to endpoint with a different value!
+    // TODO: fix issue
+    nextPageButton.addEventListener("click", () =>
+      this.getPokemons(this.nextPageEndPoint)
+    );
+  }
+
+  updatePageNavigation() {
+    const previousPageButton = this.element.querySelector(
+      ".previous-page-button"
+    );
+    const nextPageButton = this.element.querySelector(".next-page-button");
+    const pageCountElement = this.element.querySelector(".page-count-button");
     if (this.previousPageEndPoint === null) {
       previousPageButton.disabled = true;
     } else {
@@ -87,12 +108,17 @@ class PageComponent extends Component {
     } else {
       nextPageButton.disabled = false;
     }
-    previousPageButton.addEventListener("click", () =>
-      this.getPokemons(this.previousPageEndPoint)
-    );
-    nextPageButton.addEventListener("click", () =>
-      this.getPokemons(this.nextPageEndPoint)
-    );
+    if (this.nextPageEndPoint !== null) {
+      const paramString = this.nextPageEndPoint.split("?")[1];
+      const queryString = new URLSearchParams(paramString);
+      // const limit = queryString.get("limit");
+      this.currentOffset = queryString.get("offset");
+    }
+    const currentPageNumber = this.nextPageEndPoint
+      ? Math.ceil(this.currentOffset / this.pokemonsPerPage)
+      : this.currentOffset / this.pokemonsPerPage + 1;
+    const totalPages = Math.ceil(this.pokemonsCount / this.pokemonsPerPage);
+    pageCountElement.textContent = `page ${currentPageNumber} of ${totalPages}`;
   }
 }
 

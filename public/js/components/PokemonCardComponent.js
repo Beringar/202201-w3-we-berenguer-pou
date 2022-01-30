@@ -4,6 +4,7 @@ class PokemonCardComponent extends Component {
   pokemon;
   actionOnClick1;
   actionOnClick2;
+  pokemonImageUrl;
 
   constructor(parentElement, pokemon, actionOnClick1, actionOnClick2) {
     super(parentElement, "pokemon-card col", "article");
@@ -11,6 +12,9 @@ class PokemonCardComponent extends Component {
     this.pokemon = pokemon;
     this.actionOnClick1 = actionOnClick1;
     this.actionOnClick2 = actionOnClick2;
+    this.pokemonImageUrl =
+      this.pokemon.sprites.other["official-artwork"].front_default ??
+      this.pokemon.sprites.front_default;
 
     this.generateHTML();
 
@@ -20,9 +24,9 @@ class PokemonCardComponent extends Component {
   generateHTML() {
     this.element.innerHTML = `
   <div class="card shadow-sm">
-    <img src="${
-      this.pokemon.sprites.other["official-artwork"].front_default
-    }" class="card-img-top" alt="${this.pokemon.name}">
+    <img src="${this.pokemonImageUrl}" class="card-img-top" alt="${
+      this.pokemon.name
+    }">
     <div class="card-body">
       <h5 class="card-title">${this.pokemon.name[0].toUpperCase()}${this.pokemon.name.slice(
       1

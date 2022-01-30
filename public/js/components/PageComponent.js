@@ -12,6 +12,7 @@ class PageComponent extends Component {
   pokemonsCount;
   pokemonsPerPage = 18;
   currentOffset;
+  lastAction = "none";
 
   constructor(parentElement) {
     super(parentElement, "page");
@@ -198,7 +199,7 @@ class PageComponent extends Component {
   async addPokemonToCollection(pokemon) {
     const pokemonToAdd = { ...pokemon };
     delete pokemonToAdd.id;
-    fetch("http://localhost:4000/pokemon", {
+    this.lastAction = fetch("http://localhost:4000/pokemon", {
       method: "POST",
       body: JSON.stringify(pokemonToAdd),
       headers: { "Content-type": "application/json; charset=UTF-8" },

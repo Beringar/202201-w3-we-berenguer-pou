@@ -4,17 +4,23 @@ import MenuItemComponent from "./MenuItemComponent.js";
 import PokemonCardComponent from "./PokemonCardComponent.js";
 
 class PageComponent extends Component {
+  currentAPI = "pokeapi";
   pokemons;
-  nextPageEndPoint = "https://pokeapi.co/api/v2/pokemon?limit=100&offset=0";
+  nextPageEndPoint = "https://pokeapi.co/api/v2/pokemon?limit=18&offset=0";
   previousPageEndPoint = null;
   pokemonsCount;
-  pokemonsPerPage = 100;
+  pokemonsPerPage = 18;
   currentOffset;
 
   constructor(parentElement) {
     super(parentElement, "page");
-
+    this.setCurrentAPIbyPath();
     this.generateHTML();
+  }
+
+  setCurrentAPIbyPath() {
+    this.currentAPI =
+      window.location.pathname === "/" ? "pokeAPI" : "localhost:4000";
   }
 
   generateHTML() {
@@ -51,8 +57,8 @@ class PageComponent extends Component {
       new PokemonCardComponent(
         pokemonsContainer,
         pokemon,
-        () => null,
-        () => null
+        () => window.location.assign(`/${pokemon.id}?api=${this.currentAPI}`),
+        () => this.addPokemonToCollection(pokemon)
       );
     });
   }
@@ -111,7 +117,6 @@ class PageComponent extends Component {
     if (this.nextPageEndPoint !== null) {
       const paramString = this.nextPageEndPoint.split("?")[1];
       const queryString = new URLSearchParams(paramString);
-      // const limit = queryString.get("limit");
       this.currentOffset = queryString.get("offset");
     }
     const currentPageNumber = this.nextPageEndPoint
@@ -119,6 +124,18 @@ class PageComponent extends Component {
       : this.currentOffset / this.pokemonsPerPage + 1;
     const totalPages = Math.ceil(this.pokemonsCount / this.pokemonsPerPage);
     pageCountElement.textContent = `page ${currentPageNumber} of ${totalPages}`;
+  }
+
+  async addPokemonToCollection(pokemon) {
+    const pokemonToAdd = { ...pokemon };
+    delete pokemonToAdd.id;
+    fetch("http://localhost:4000/pokemon", {
+      method: "POST",
+      body: JSON.stringify(pokemonToAdd),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+      .then((response) => response.json())
+      .then((json) => json);
   }
 }
 

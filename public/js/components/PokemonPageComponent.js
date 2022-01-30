@@ -3,6 +3,8 @@ import MenuComponent from "./MenuComponent.js";
 import MenuItemComponent from "./MenuItemComponent.js";
 
 class PokemonPageComponent extends Component {
+  lastAction;
+
   constructor(parentElement) {
     super(parentElement, "page");
     this.generateHTML();
@@ -116,17 +118,16 @@ class PokemonPageComponent extends Component {
     });
   } */
 
-  /* async addPokemonToCollection(pokemon) {
-    const pokemonToAdd = { ...pokemon };
-    delete pokemonToAdd.id;
-    fetch("http://localhost:4000/pokemon", {
-      method: "POST",
-      body: JSON.stringify(pokemonToAdd),
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-    })
+  async removePokemonFromCollection(pokemonID) {
+    this.lastaction = await fetch(
+      `http://localhost:4000/pokemon/${pokemonID}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => response.json())
       .then((json) => json);
-  } */
+  }
 }
 
 export default PokemonPageComponent;

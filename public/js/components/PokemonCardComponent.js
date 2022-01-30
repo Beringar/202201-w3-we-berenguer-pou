@@ -16,6 +16,7 @@ class PokemonCardComponent extends Component {
   }
 
   generateHTML() {
+    this.element.dataset.id = this.pokemon.id;
     this.element.innerHTML = `
   <div class="card shadow-sm">
     <img src="${this.pokemonImageUrl}" class="card-img-top" alt="${

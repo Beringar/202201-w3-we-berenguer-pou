@@ -52,3 +52,7 @@ Configs: put here stack, tooling, etc...
 12. implemented ButtonComponent component to inject actions to cards conditionally (if main page(pokeapi), if mypokemons(myapi))
 
 13. implemented removePokemonFromCollection in PageComponent component (if main page(pokeapi), if mypokemons(myapi))
+
+14. added and deployed mipokeapi app to Heroku (api url: https://mypokeapi.herokuapp.com/)
+
+- tested ok. GET, ADD, and DELETE methods are working.

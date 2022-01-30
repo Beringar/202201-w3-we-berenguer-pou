@@ -70,7 +70,7 @@ class PageComponent extends Component {
     if (api === "pokeAPI") {
       this.getPokeAPIpokemons(this.nextPageEndPoint);
     } else {
-      this.getMyAPIpokemons("http://localhost:4000/pokemon");
+      this.getMyAPIpokemons("https://mypokeapi.herokuapp.com/pokemon");
     }
   }
 
@@ -199,7 +199,7 @@ class PageComponent extends Component {
   async addPokemonToCollection(pokemon) {
     const pokemonToAdd = { ...pokemon };
     delete pokemonToAdd.id;
-    this.lastAction = fetch("http://localhost:4000/pokemon", {
+    this.lastAction = fetch("https://mypokeapi.herokuapp.com/pokemon", {
       method: "POST",
       body: JSON.stringify(pokemonToAdd),
       headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -210,7 +210,7 @@ class PageComponent extends Component {
 
   async removePokemonFromCollection(pokemonID) {
     this.lastaction = await fetch(
-      `http://localhost:4000/pokemon/${pokemonID}`,
+      `https://mypokeapi.herokuapp.com/pokemon/${pokemonID}`,
       {
         method: "DELETE",
       }

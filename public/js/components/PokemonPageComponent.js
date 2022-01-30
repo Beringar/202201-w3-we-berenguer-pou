@@ -37,7 +37,7 @@ class PokemonPageComponent extends Component {
     if (api === "pokeAPI") {
       this.getPokeAPIpokemons(this.nextPageEndPoint);
     } else {
-      this.getMyAPIpokemons("http://localhost:4000/pokemon");
+      this.getMyAPIpokemons("https://mypokeapi.herokuapp.com/pokemon");
     }
   }
 
@@ -120,7 +120,7 @@ class PokemonPageComponent extends Component {
 
   async removePokemonFromCollection(pokemonID) {
     this.lastaction = await fetch(
-      `http://localhost:4000/pokemon/${pokemonID}`,
+      `https://mypokeapi.herokuapp.com/pokemon/${pokemonID}`,
       {
         method: "DELETE",
       }

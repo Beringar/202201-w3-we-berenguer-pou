@@ -65,6 +65,7 @@ class PokemonPageComponent extends Component {
 
   renderPokemon(pokemon, currentAPI) {
     const pokemonContainer = this.element.querySelector(".main");
+    pokemonContainer.innerHTML = "";
     const pokemonDetail = new PokemonDetailComponent(pokemonContainer, pokemon);
     const pokemonCardButtonsContainer =
       pokemonDetail.element.querySelector(".btn-group");
@@ -90,7 +91,13 @@ class PokemonPageComponent extends Component {
       );
       new ButtonComponent(
         pokemonCardButtonsContainer,
-        "poke-card__button btn btn-sm btn-dark",
+        "poke-card__button btn btn-sm btn-warning",
+        "Edit description",
+        () => this.editPokemon(pokemon)
+      );
+      new ButtonComponent(
+        pokemonCardButtonsContainer,
+        "poke-card__button btn btn-sm btn-danger",
         "Remove from myPokemons",
         () => this.removePokemonFromCollection(pokemon.id)
       );
@@ -121,6 +128,47 @@ class PokemonPageComponent extends Component {
 
     this.element.querySelector(`[data-id='${pokemonID}']`).remove();
     window.location.assign("./mypokemons.html");
+  }
+
+  async editPokemon(pokemon) {
+    this.element
+      .querySelector(".pokemon-detail__form")
+      .classList.add("pokemon-detail__form--visible");
+    const nameInput = this.element.querySelector("#name_input");
+    const descriptionInput = this.element.querySelector("#description_input");
+    nameInput.value = this.pokemon.name;
+    descriptionInput.value = this.pokemon.description ?? "";
+    this.element
+      .querySelector(".pokemon-detail__form")
+      .addEventListener("submit", (event) => {
+        event.preventDefault();
+        const dataToPut = {
+          name: nameInput.value,
+          description: descriptionInput.value,
+        };
+        this.putDataMyAPI(pokemon, dataToPut);
+      });
+  }
+
+  async putDataMyAPI(pokemon, dataToPut) {
+    const data = { ...dataToPut, ...pokemon };
+    this.lastAction = await fetch(
+      `https://mypokeapi.herokuapp.com/pokemon/${pokemon.id}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        this.element
+          .querySelector(".pokemon-detail__form")
+          .classList.remove("pokemon-detail__form--visible");
+        this.pokemon = json;
+        this.renderPokemon(this.pokemon, this.currentAPI);
+        return json;
+      });
   }
 }
 

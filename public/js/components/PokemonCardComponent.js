@@ -23,12 +23,9 @@ class PokemonCardComponent extends Component {
       this.pokemon.name
     }">
     <div class="card-body">
-      <h5 class="card-title">${this.pokemon.name[0].toUpperCase()}${this.pokemon.name.slice(
+      <h4 class="card-title">${this.pokemon.name[0].toUpperCase()}${this.pokemon.name.slice(
       1
-    )}</h5>
-      <p class="card-text">
-        Species: ${this.pokemon.species.name}
-      </p>
+    )}</h4>
       <p class="text-muted text-end">height: ${this.pokemon.height} weight: ${
       this.pokemon.weight
     }</p>

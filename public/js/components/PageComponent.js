@@ -60,7 +60,7 @@ class PageComponent extends Component {
     const homePageMenuItem = new MenuItemComponent("Home", "/", true);
     const myPokemonsMenuItem = new MenuItemComponent(
       "My Pokemons",
-      "/mypokemons",
+      "/mypokemons.html",
       false
     );
     new MenuComponent(headerElement, [homePageMenuItem, myPokemonsMenuItem]);
@@ -118,7 +118,7 @@ class PageComponent extends Component {
       if (currentAPI === "pokeAPI") {
         new ButtonComponent(
           pokemonCardButtonsContainer,
-          "poke-card__button btn btn-sm btn-outline-secondary",
+          "poke-card__button btn btn-sm btn-secondary",
           "View",
           () =>
             window.location.assign(
@@ -127,14 +127,14 @@ class PageComponent extends Component {
         );
         new ButtonComponent(
           pokemonCardButtonsContainer,
-          "poke-card__button btn btn-sm btn-outline-secondary",
+          "poke-card__button btn btn-sm btn-dark",
           "Add to myPokemons",
           () => this.addPokemonToCollection(pokemon)
         );
       } else {
         new ButtonComponent(
           pokemonCardButtonsContainer,
-          "poke-card__button btn btn-sm btn-outline-secondary",
+          "poke-card__button btn btn-sm btn-secondary",
           "View / Edit",
           () =>
             window.location.assign(
@@ -143,7 +143,7 @@ class PageComponent extends Component {
         );
         new ButtonComponent(
           pokemonCardButtonsContainer,
-          "poke-card__button btn btn-sm btn-outline-secondary",
+          "poke-card__button btn btn-sm btn-dark",
           "Remove from myPokemons",
           () => this.removePokemonFromCollection(pokemon.id)
         );

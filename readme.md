@@ -58,3 +58,5 @@ Configs: put here stack, tooling, etc...
 - tested ok. GET, ADD, and DELETE methods are working.
 
 15. added PokemonDetailComponent
+
+- added form tu update Name and description (in PUT method)

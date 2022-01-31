@@ -143,7 +143,7 @@ class PageComponent extends Component {
         );
         new ButtonComponent(
           pokemonCardButtonsContainer,
-          "poke-card__button btn btn-sm btn-dark",
+          "poke-card__button btn btn-sm btn-danger",
           "Remove from myPokemons",
           () => this.removePokemonFromCollection(pokemon.id)
         );

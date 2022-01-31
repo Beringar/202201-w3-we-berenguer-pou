@@ -6,7 +6,6 @@ class PokemonCardComponent extends Component {
 
   constructor(parentElement, pokemon) {
     super(parentElement, "pokemon-card col", "article");
-
     this.pokemon = pokemon;
     this.pokemonImageUrl =
       this.pokemon.sprites.other["official-artwork"].front_default ??

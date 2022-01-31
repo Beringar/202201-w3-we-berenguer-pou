@@ -33,7 +33,9 @@ class PokemonDetailComponent extends Component {
           <h1 class="display-5 fw-bold lh-1 mb-3">
             ${this.pokemon.name[0].toUpperCase()}${this.pokemon.name.slice(1)}
           </h1>
-          <p class="lead">bla, bla, bla, lorem, ipsum, bla....</p>
+          <p class="lead">${
+            this.pokemon.description ?? "custom description not defined"
+          }</p>
           <ul class="pokemon-detail__grid">
             <li class="pokemon-detail__grid__item"><span class="pokemon-detail__key">Base experience</span>
             <span class="pokemon-detail__value">${
@@ -85,6 +87,19 @@ class PokemonDetailComponent extends Component {
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group"></div>
       </div>
+      <form class="pokemon-detail__form id="mypokeapi-form">
+    <div class="mb-3">
+      <label class="form-label" for="name_input">Name</label>
+      <input class="form-control" id="name_input" type="text" placeholder="Name" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="description_input">Description</label>
+      <textarea class="form-control" id="description_input" type="text" placeholder="Description" style="height: 10rem;"></textarea>
+    </div>
+    <div class="d-grid">
+      <button id="submit_input" class="btn btn-primary btn-lg" type="submit">Submit</button>
+    </div>
+  </form>
   </div>
 `;
   }

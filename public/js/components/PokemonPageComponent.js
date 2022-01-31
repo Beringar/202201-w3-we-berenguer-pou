@@ -1,25 +1,38 @@
+import ButtonComponent from "./ButtonComponent.js";
 import Component from "./Component.js";
 import MenuComponent from "./MenuComponent.js";
 import MenuItemComponent from "./MenuItemComponent.js";
+import PokemonDetailComponent from "./PokemonDetailComponent.js";
 
 class PokemonPageComponent extends Component {
+  pokemon;
+  currentAPI;
+  queryId;
   lastAction;
 
   constructor(parentElement) {
     super(parentElement, "page");
+
+    this.getRequestParams();
     this.generateHTML();
+  }
+
+  getRequestParams() {
+    const paramString = window.location.search;
+    const queryString = new URLSearchParams(paramString);
+    this.currentAPI = queryString.get("api");
+    this.queryId = queryString.get("id");
   }
 
   generateHTML() {
     this.element.innerHTML = `
     <header class="header p-3 bg-dark text-white"></header>
     <main class="main py-5 bg-light">
-      <div class="container">
-      <h1>detail page... working on it</h1>
-      </div>
     </main>
     `;
     this.renderMenu();
+    this.handlePokemon(this.currentAPI);
+    // this.renderPokemonInfo;
   }
 
   renderMenu() {
@@ -27,96 +40,74 @@ class PokemonPageComponent extends Component {
     const homePageMenuItem = new MenuItemComponent("Home", "/", true);
     const myPokemonsMenuItem = new MenuItemComponent(
       "My Pokemons",
-      "/mypokemons",
+      "/mypokemons.html",
       false
     );
     new MenuComponent(headerElement, [homePageMenuItem, myPokemonsMenuItem]);
   }
 
-  async handlePokemons(api) {
+  async handlePokemon(api) {
     if (api === "pokeAPI") {
-      this.getPokeAPIpokemons(this.nextPageEndPoint);
+      this.getPokemon(`https://pokeapi.co/api/v2/pokemon/${this.queryId}`);
     } else {
-      this.getMyAPIpokemons("https://mypokeapi.herokuapp.com/pokemon");
+      this.getPokemon(
+        `https://mypokeapi.herokuapp.com/pokemon/${this.queryId}`
+      );
     }
   }
 
-  async getPokeAPIpokemons(endpointURL) {
+  async getPokemon(endpointURL) {
     if (endpointURL === null) return;
-    const pokemonsEndpoints = await fetch(endpointURL)
+    this.pokemon = await fetch(endpointURL).then((response) => response.json());
+
+    this.renderPokemon(this.pokemon, this.currentAPI);
+  }
+
+  renderPokemon(pokemon, currentAPI) {
+    const pokemonContainer = this.element.querySelector(".main");
+    const pokemonDetail = new PokemonDetailComponent(pokemonContainer, pokemon);
+    const pokemonCardButtonsContainer =
+      pokemonDetail.element.querySelector(".btn-group");
+    if (currentAPI === "pokeAPI") {
+      new ButtonComponent(
+        pokemonCardButtonsContainer,
+        "poke-card__button btn btn-sm btn-secondary",
+        "Back to gallery view",
+        () => window.location.assign("./")
+      );
+      new ButtonComponent(
+        pokemonCardButtonsContainer,
+        "poke-card__button btn btn-sm btn-dark",
+        "Add to myPokemons",
+        () => this.addPokemonToCollection(pokemon)
+      );
+    } else {
+      new ButtonComponent(
+        pokemonCardButtonsContainer,
+        "poke-card__button btn btn-sm btn-secondary",
+        "Back to gallery view",
+        () => window.location.assign("./mypokemons.html")
+      );
+      new ButtonComponent(
+        pokemonCardButtonsContainer,
+        "poke-card__button btn btn-sm btn-dark",
+        "Remove from myPokemons",
+        () => this.removePokemonFromCollection(pokemon.id)
+      );
+    }
+  }
+
+  async addPokemonToCollection(pokemon) {
+    const pokemonToAdd = { ...pokemon };
+    delete pokemonToAdd.id;
+    this.lastAction = fetch("https://mypokeapi.herokuapp.com/pokemon", {
+      method: "POST",
+      body: JSON.stringify(pokemonToAdd),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
       .then((response) => response.json())
-      .then((data) => {
-        this.nextPageEndPoint = data.next;
-        this.previousPageEndPoint = data.previous;
-        this.pokemonsCount = data.count;
-        return data.results;
-      });
-    const pokemonsAllpromise = Promise.all(
-      pokemonsEndpoints.map(({ url }) =>
-        fetch(url).then((response) => response.json())
-      )
-    );
-    this.pokemons = await pokemonsAllpromise;
-    this.renderPokemons(this.pokemons, this.currentAPI);
-    this.updatePageNavigation();
+      .then((json) => json);
   }
-
-  async getMyAPIpokemons(endpointURL) {
-    if (endpointURL === null) return;
-    this.pokemons = await fetch(endpointURL).then((response) =>
-      response.json()
-    );
-    //  this.nextPageEndPoint = data.next;
-    //  this.previousPageEndPoint = data.previous;
-    //  this.pokemonsCount = data.count;
-    //  return data.results;
-
-    this.renderPokemons(this.pokemons, this.currentAPI);
-    // this.updatePageNavigation();
-  }
-
-  /* renderPokemons(pokemons, currentAPI) {
-    const pokemonsContainer = this.element.querySelector(".pokemons-album");
-    pokemonsContainer.innerHTML = "";
-    pokemons.forEach((pokemon) => {
-      const pokemonCard = new PokemonCardComponent(pokemonsContainer, pokemon);
-      const pokemonCardButtonsContainer =
-        pokemonCard.element.querySelector(".btn-group");
-      if (currentAPI === "pokeAPI") {
-        new ButtonComponent(
-          pokemonCardButtonsContainer,
-          "poke-card__button btn btn-sm btn-outline-secondary",
-          "View",
-          () =>
-            window.location.assign(
-              `./pokemon/${pokemon.id}?api=${this.currentAPI}`
-            )
-        );
-        new ButtonComponent(
-          pokemonCardButtonsContainer,
-          "poke-card__button btn btn-sm btn-outline-secondary",
-          "Add to myPokemons",
-          () => this.addPokemonToCollection(pokemon)
-        );
-      } else {
-        new ButtonComponent(
-          pokemonCardButtonsContainer,
-          "poke-card__button btn btn-sm btn-outline-secondary",
-          "View / Edit",
-          () =>
-            window.location.assign(
-              `./pokemon/${pokemon.id}?api=${this.currentAPI}`
-            )
-        );
-        new ButtonComponent(
-          pokemonCardButtonsContainer,
-          "poke-card__button btn btn-sm btn-outline-secondary",
-          "Remove from myPokemons",
-          () => null
-        );
-      }
-    });
-  } */
 
   async removePokemonFromCollection(pokemonID) {
     this.lastaction = await fetch(
@@ -127,6 +118,9 @@ class PokemonPageComponent extends Component {
     )
       .then((response) => response.json())
       .then((json) => json);
+
+    this.element.querySelector(`[data-id='${pokemonID}']`).remove();
+    window.location.assign("./mypokemons.html");
   }
 }
 

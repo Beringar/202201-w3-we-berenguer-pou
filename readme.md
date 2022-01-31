@@ -56,3 +56,5 @@ Configs: put here stack, tooling, etc...
 14. added and deployed mipokeapi app to Heroku (api url: https://mypokeapi.herokuapp.com/)
 
 - tested ok. GET, ADD, and DELETE methods are working.
+
+15. added PokemonDetailComponent

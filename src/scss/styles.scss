@@ -122,3 +122,28 @@ body {
     }
   }
 }
+
+.comunications {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  padding: 0 100px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+  right: 100vw;
+  left: -100vw;
+  justify-content: center;
+  &__text {
+    font-size: 2rem;
+    color: white;
+  }
+}
+.comunications.on {
+  right: 0;
+  left: 0;
+  background-color: #007bff;
+}

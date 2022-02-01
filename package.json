@@ -13,7 +13,11 @@
     }
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "./public/js/**"
+    ]
   },
   "scripts": {
     "test": "jest --verbose --coverage",

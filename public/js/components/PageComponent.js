@@ -49,6 +49,9 @@ class PageComponent extends Component {
         </section>
       </div>
     </main>
+    <div class="comunications">
+      <p class="comunications__text"></p>
+    </div>
     `;
     this.renderMenu();
     this.handlePokemons(currentAPI);
@@ -145,7 +148,7 @@ class PageComponent extends Component {
           pokemonCardButtonsContainer,
           "poke-card__button btn btn-sm btn-danger",
           "Remove from myPokemons",
-          () => this.removePokemonFromCollection(pokemon.id)
+          () => this.removePokemonFromCollection(pokemon)
         );
       }
     });
@@ -199,26 +202,48 @@ class PageComponent extends Component {
   async addPokemonToCollection(pokemon) {
     const pokemonToAdd = { ...pokemon };
     delete pokemonToAdd.id;
+    let responseStatus = "";
     this.lastAction = fetch("https://mypokeapi.herokuapp.com/pokemon", {
       method: "POST",
       body: JSON.stringify(pokemonToAdd),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        responseStatus = `${response.status} - ${response.statusText}`;
+        return response.json();
+      })
       .then((json) => json);
+    const msg = `POST > ${pokemon.name} / id:${pokemon.id} > ${responseStatus}`;
+    this.showRequestMessage(msg);
   }
 
-  async removePokemonFromCollection(pokemonID) {
+  async removePokemonFromCollection(pokemon) {
+    let responseStatus = "";
     this.lastaction = await fetch(
-      `https://mypokeapi.herokuapp.com/pokemon/${pokemonID}`,
+      `https://mypokeapi.herokuapp.com/pokemon/${pokemon.id}`,
       {
         method: "DELETE",
       }
     )
-      .then((response) => response.json())
+      .then((response) => {
+        responseStatus = `${response.status} - ${response.statusText}`;
+        return response.json();
+      })
       .then((json) => json);
 
-    this.element.querySelector(`[data-id='${pokemonID}']`).remove();
+    this.element.querySelector(`[data-id='${pokemon.id}']`).remove();
+    const msg = `DELETE > ${pokemon.name} / id:${pokemon.id} > ${responseStatus}`;
+    this.showRequestMessage(msg);
+  }
+
+  showRequestMessage(message) {
+    const communicationsWrapper = this.element.querySelector(".comunications");
+    const textDisplay = document.querySelector(".comunications__text");
+    textDisplay.textContent = message;
+    communicationsWrapper.classList.add("on");
+    setTimeout(() => {
+      communicationsWrapper.classList.remove("on");
+    }, 2500);
   }
 }
 

@@ -6,7 +6,10 @@ describe("Given a PokemonCardComponent component", () => {
       const container = document.createElement("div");
       new PokemonCardComponent(
         container,
-        { name: "" },
+        {
+          name: "Pedro",
+          sprites: { other: { "official-artwork": { front_default: null } } },
+        },
         () => null,
         () => null
       );
@@ -21,26 +24,14 @@ describe("Given a PokemonCardComponent component", () => {
       const expectedText = object.name;
       const pokemonCard = new PokemonCardComponent(
         container,
-        { name: "Antonio Mastroiani" },
+        {
+          name: "Antonio Mastroiani",
+          sprites: { other: { "official-artwork": { front_default: null } } },
+        },
         () => null,
         () => null
       );
       expect(pokemonCard.element.textContent).toMatch(expectedText);
-    });
-  });
-
-  describe("When it receives two actions", () => {
-    test("Then the  two actions should be invoked'", () => {
-      const container = document.createElement("div");
-      const actionA = jest.fn();
-      const pokemonCard = new PokemonCardComponent(
-        container,
-        { name: "" },
-        actionA,
-        () => null
-      );
-      pokemonCard.element.querySelector(".poke-card__button-a").click();
-      expect(actionA).toHaveBeenCalled();
     });
   });
 });

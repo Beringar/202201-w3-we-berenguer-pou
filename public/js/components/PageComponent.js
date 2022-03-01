@@ -40,6 +40,9 @@ class PageComponent extends Component {
         </section>
       </div>
     </main>
+    <div class="communications">
+      <p class="communications__text"></p>
+    </div>
     `
         : `
     <header class="header p-3 bg-dark text-white"></header>
@@ -49,8 +52,8 @@ class PageComponent extends Component {
         </section>
       </div>
     </main>
-    <div class="comunications">
-      <p class="comunications__text"></p>
+    <div class="communications">
+      <p class="communications__text"></p>
     </div>
     `;
     this.renderMenu();
@@ -237,8 +240,8 @@ class PageComponent extends Component {
   }
 
   showRequestMessage(message) {
-    const communicationsWrapper = this.element.querySelector(".comunications");
-    const textDisplay = document.querySelector(".comunications__text");
+    const communicationsWrapper = this.element.querySelector(".communications");
+    const textDisplay = document.querySelector(".communications__text");
     textDisplay.textContent = message;
     communicationsWrapper.classList.add("on");
     setTimeout(() => {

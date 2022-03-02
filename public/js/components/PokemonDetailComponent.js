@@ -26,7 +26,7 @@ class PokemonDetailComponent extends Component {
             alt="${this.pokemon.name}"
             width="700"
             height="500"
-            layout="responsive"
+            loading="lazy"
           />
         </div>
         <div class="col-6 col-lg-6">
